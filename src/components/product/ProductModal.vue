@@ -46,7 +46,7 @@ export default {
     const store = useStore()
 
     onMounted(() => {
-      store.dispatch('category/loadCategories')
+      store.dispatch('tier/loadCategories')
     })
 
     const submit = async values => {

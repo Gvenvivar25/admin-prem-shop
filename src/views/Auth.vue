@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="onSubmit">
-    <h3>Вход в систему</h3>
+    <h1>Вход в систему</h1>
 
     <div :class="['form-control', {invalid: eError}]">
       <label for="email">Email</label>

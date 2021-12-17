@@ -54,7 +54,7 @@ export default {
     const product = computed(() => store.getters['product/products']
         .find(prod => prod.id === route.params.id))
 
-    const category = computed(() => store.getters['category/categories']
+    const category = computed(() => store.getters['tier/categories']
     .find(cat => cat.type === product.value.category))
 
     const productInCart = computed(() => store.getters['cart/cart'].find(item => item.id === product.value.id))

@@ -1,7 +1,7 @@
 <template>
   <app-modal :title="title" @close="$emit('reject')">
-    <button class="btn primary" @click="$emit('confirm')">Да</button>
-    <button class="btn danger" @click="$emit('reject')">Нет</button>
+    <button class="btn primary" @click="$emit('confirm')">Yes</button>
+    <button class="btn danger" @click="$emit('reject')">No</button>
   </app-modal>
 
 </template>

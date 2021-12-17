@@ -36,15 +36,17 @@ export function useLoginForm() {
       await store.dispatch('auth/login', values)
       const user = store.getters['auth/user']
       if(user.role === 'admin') {
-        router.push('/admin/products')
+        router.push('/products')
+      } else {
+        router.push(router.currentRoute.value)
       }
-      else if(user.role === 'customer') {
+      /*else if(user.role === 'customer') {
         if(router.currentRoute.value.path === '/auth') {
           router.push({name: 'Shop'})
         } else {
           router.push(router.currentRoute.value)
         }
-      }
+      }*/
     } catch (e) {
       console.log(e)
     }

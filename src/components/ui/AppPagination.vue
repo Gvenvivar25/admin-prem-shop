@@ -50,9 +50,10 @@ export default {
 }
 
 .pagination-item > button {
-  background: #ffffff;
-  border: solid 1px #42b983;
+  background: #ef8e18;
+  border: solid 1px #925307;
   border-radius: 8px;
+  color: white;
 }
 
 .btn:hover {

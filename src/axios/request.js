@@ -1,3 +1,4 @@
+/*
 import axios from 'axios'
 import router from '@/router'
 import store from '@/store'
@@ -32,4 +33,4 @@ requestAxios.interceptors.response.use(null, error => {
   return Promise.reject(error)
 })
 
-export default requestAxios
+export default requestAxios*/

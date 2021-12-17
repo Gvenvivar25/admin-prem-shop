@@ -20,7 +20,7 @@
       <td>{{ prod.category }}</td>
       <td>{{ prod.count }}</td>
       <td>
-        <button class="btn" @click="$router.push(`/admin/products/${prod.id}`)">Открыть</button>
+        <button class="btn" @click="$router.push(`/products/${prod.id}`)">Открыть</button>
       </td>
     </tr>
     </tbody>

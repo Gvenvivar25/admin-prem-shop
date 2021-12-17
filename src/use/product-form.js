@@ -11,7 +11,7 @@ export function useProductForm(fn) {
   })
   const store = useStore()
 
-  const categories = computed (() => store.getters['category/categories'])
+  const categories = computed (() => store.getters['tier/categories'])
 
   const {value: title, errorMessage: tError, handleBlur: tBlur} = useField(
     'title',

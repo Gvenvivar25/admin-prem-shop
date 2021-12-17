@@ -1,28 +1,28 @@
 <template>
   <app-loader v-if="loading"></app-loader>
-  <app-page v-else-if="category" :title="category.title">
+  <app-page v-else-if="tier" :title="tier.name">
       <form @submit.prevent="onUpdate">
         <div class="form-control">
-          <label for="title">Наименование</label>
-          <input type="text" id="title" v-model="category.title">
+          <label for="name">Name</label>
+          <input type="text" id="name" v-model="tier.name">
         </div>
 
         <div class="form-control">
-          <label for="type">Цена</label>
-          <input type="text" id="type" v-model.trim="category.type">
+          <label for="tier">Tier number</label>
+          <input type="text" id="tier" v-model.trim="tier.tier">
         </div>
 
-        <button class="btn danger" @click.prevent="confirm = true">Удалить</button>
-        <button class="btn warning" type="submit" v-if="hasChanges">Обновить</button>
+        <button class="btn danger" @click.prevent="confirm = true">Delete</button>
+        <button class="btn warning" type="submit" v-if="hasChanges">Update</button>
       </form>
   </app-page>
-  <div class="card" v-else>Товар не найден</div>
+  <div class="card" v-else>There is no such tier</div>
 
 
   <teleport to="body">
     <app-confirm
         v-if="confirm"
-        title="Вы уверены, что хотите удалить категорию?"
+        title="Are you sure you want to delete tier?"
         @reject="confirm = false"
         @confirm="remove"
     ></app-confirm>
@@ -31,7 +31,7 @@
   <teleport to="body">
     <app-confirm
         v-if="saveChanges"
-        title="Изменения не были сохранены. При переходе изменения будут утеряны. Покинуть страницу?"
+        title="The changes were not saved. Changes will be lost during the transition. Leave the page?"
         @reject="saveChanges = false"
         @confirm="navigate"
     ></app-confirm>
@@ -53,35 +53,35 @@ export default {
     const route = useRoute()
     const router = useRouter()
     const store = useStore()
-    const category = ref({})
+    const tier = ref({})
     const confirm = ref(false)
     const loading = ref(true)
     let initial
 
     onMounted( async () => {
-      initial = await store.dispatch('category/loadOne', route.params.id)
-      category.value = {...initial}
+      initial = await store.dispatch('tier/loadOne', route.params.id)
+      tier.value = {...initial}
       loading.value = false
     })
 
     const hasChanges = computed(() =>
-        category.value.title !== initial.title ||
-        category.value.type !== initial.type
+        tier.value.name !== initial.name ||
+        tier.value.tier !== initial.tier
     )
 
     const remove = async () => {
       confirm.value = false
-      await store.dispatch('category/delete', route.params.id)
-      router.push({name: 'AdminCategories'})
+      await store.dispatch('tier/delete', route.params.id)
+      router.push({name: 'AdminTiers'})
     }
 
     const onUpdate = async () => {
-      initial = await store.dispatch('category/update', category.value)
-      category.value = {...initial}
+      initial = await store.dispatch('tier/update', tier.value)
+      tier.value = {...initial}
     }
 
     return {
-      category,
+      tier,
       loading,
       hasChanges,
       remove,

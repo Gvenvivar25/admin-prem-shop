@@ -1,19 +1,22 @@
 <template>
   <div class="navbar">
-    <h3>Админка</h3>
+    <h3 class="header_name">Admin Premium Shop</h3>
 
     <ul class="navbar-menu">
       <li>
-        <router-link to="/admin/products">Список товаров</router-link>
+        <router-link to="/products">Products</router-link>
       </li>
       <li>
-        <router-link to="/admin/categories">Категории</router-link>
+        <router-link to="/tiers">Tiers</router-link>
       </li>
       <li>
-        <router-link to="/admin/orders">Заказы</router-link>
+        <router-link to="/types">Types</router-link>
       </li>
       <li>
-        <a href="#" @click.prevent="logout">Выход</a>
+        <router-link to="/nations">Nations</router-link>
+      </li>
+      <li>
+        <a href="#" @click.prevent="logout">Log out</a>
       </li>
     </ul>
   </div>
@@ -31,7 +34,7 @@ export default {
     return {
       logout: () => {
         store.commit('auth/logout')
-        router.push('/')
+        router.push('/auth')
       }
     }
   }

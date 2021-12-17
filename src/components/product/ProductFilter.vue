@@ -38,7 +38,7 @@ export default {
     onMounted(async () => {
       await useCategories()
     })
-    const categories = computed(() => store.getters['category/categories'])
+    const categories = computed(() => store.getters['tier/categories'])
 
     const changeCategory = (cat) => {
       category.value = cat

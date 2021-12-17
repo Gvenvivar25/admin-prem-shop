@@ -85,7 +85,7 @@ export default {
       loading.value = false
     })
 
-    const categories = computed( () => store.getters['category/categories'])
+    const categories = computed( () => store.getters['tier/categories'])
 
     const hasChanges = computed(() =>
         product.value.title !== initial.title ||

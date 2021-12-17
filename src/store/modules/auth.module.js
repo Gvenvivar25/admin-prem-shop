@@ -3,6 +3,7 @@ import requestAxios from '@/axios/request'
 import {error} from '@/utils/error'
 import store from '@/store'
 import router from '@/router'
+import FireStoreParser from 'firestore-parser'
 
 const TOKEN_KEY = 'jwt-token'
 const REFRESH_TOKEN = 'jwt-refresh-token'
@@ -45,10 +46,13 @@ export default {
   actions: {
     async login({ commit, dispatch }, payload) {
       try {
-        const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.VUE_APP_FB_KEY}`
+       // console.log(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDDrD7uNvRMMdXHFrRmgscD4_LwwQQdpmA`)
+        const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDDrD7uNvRMMdXHFrRmgscD4_LwwQQdpmA`
         const {data} = await axios.post(url, {...payload, returnSecureToken: true})
+        //console.log(data)
         commit('setToken', data)
         commit('clearMessage', null, {root: true})
+       // console.log(data.localId)
         await dispatch('getUser', data.localId)
       } catch(e) {
         dispatch('setMessage', {
@@ -61,8 +65,11 @@ export default {
     },
     async getUser({ commit, dispatch, }, localId) {
       try {
-        const {data} = await requestAxios.get(`/users/${localId}.json`)
-        commit('setUser', {localId: localId, ...data})
+        const {data} = await axios.get(`https://firestore.googleapis.com/v1beta1/projects/premiumshopwot/databases/(default)/documents/users/${localId}`)
+        const {fields} = data
+        const user = FireStoreParser(fields)
+        console.log(user)
+        commit('setUser', {localId: localId, ...user})
         commit('clearMessage', null, {root: true})
       } catch(e) {
         dispatch('setMessage', {
@@ -149,6 +156,7 @@ export default {
       return new Date() >= state.expiresDate
     },
     isAdmin(state) {
+      console.log(state.user)
       return state.user.role === 'admin'
     },
     isAuthenticated(_, getters) {

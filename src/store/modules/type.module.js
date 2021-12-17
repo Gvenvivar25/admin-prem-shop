@@ -1,32 +1,33 @@
-import axios from '@/axios/request'
-import {transform} from '@/utils/transform'
+import {addType, getAllTypes, getOneType, removeType, updateType} from '@/firebase/type'
+
 
 export default {
   namespaced: true,
   state() {
     return {
-      categories: []
+      types: []
     }
   },
   mutations: {
-    setCategories(state, categories) {
-      state.categories = categories
+    setTypes(state, types) {
+      state.types = types
     },
-    addCategory(state, category) {
-      state.categories.push(category)
+    addType(state, type) {
+      state.types.push(type)
     },
-    updateCategory(state, category) {
-      const idx = state.categories.findIndex(item => item.id === category.id)
+    updateType(state, type) {
+      const idx = state.types.findIndex(item => item.id === type.id)
       if (idx !== -1) {
-        state.categories[idx] = category
+        state.types[idx] = type
       }
     }
   },
   actions: {
-    async loadCategories({commit, dispatch}) {
+    async loadTypes({commit, dispatch}) {
       try {
-        const {data} = await axios.get(`/categories.json`)
-        commit('setCategories', transform(data))
+        const types = await getAllTypes()
+        console.log(types)
+        commit('setTypes', types)
       } catch (e) {
         dispatch('setMessage', {
           value: e.message,
@@ -36,8 +37,7 @@ export default {
     },
     async loadOne({ dispatch}, id) {
       try {
-        const {data} = await axios.get(`/categories/${id}.json`)
-        return {...data, id: id}
+        return await getOneType(id)
       } catch (e) {
         dispatch('setMessage', {
           value: e.message,
@@ -47,10 +47,10 @@ export default {
     },
     async create({ commit, dispatch }, payload) {
       try {
-        const {data} = await axios.post(`/categories.json`, payload)
-        commit('addCategory', {...payload, id: data.name})
+        await addType({...payload, id: payload.name})
+        commit('addType', payload)
         dispatch('setMessage', {
-          value: 'Категория успешно создана',
+          value: 'Type is successfully added',
           type: 'primary'
         }, {root: true})
       } catch (e) {
@@ -60,15 +60,15 @@ export default {
         }, {root: true})
       }
     },
-    async update({commit, dispatch }, category) {
+    async update({commit, dispatch }, type) {
       try {
-        await axios.put(`/categories/${category.id}.json`, category)
-        commit('updateCategory', category)
+        await updateType(type)
+        commit('updateTu=ype', type)
         dispatch('setMessage', {
-          value: 'Данные о категории обновлены',
+          value: 'Type is successfully updated',
           type: 'primary'
         }, {root: true})
-        return category
+        return type
       } catch (e) {
         dispatch('setMessage', {
           value: e.message,
@@ -78,10 +78,10 @@ export default {
     },
     async delete({dispatch}, id) {
       try {
-        await axios.delete(`/categories/${id}.json`)
-        dispatch('loadCategories')
+        await removeType(id)
+        dispatch('loadTypes')
         dispatch('setMessage', {
-          value: 'Категория успешно удалена',
+          value: 'Type is deleted',
           type: 'primary'
         }, {root: true})
       } catch (e) {
@@ -93,8 +93,8 @@ export default {
     }
   },
   getters: {
-    categories(state) {
-      return state.categories
+    types(state) {
+      return state.types
     }
   }
 }

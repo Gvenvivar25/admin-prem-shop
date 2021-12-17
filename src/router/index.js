@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import store from '@/store'
 
 const routes = [
-  {
+  /*{
     path: '/',
     name: 'Shop',
     component: () => import('../views/Shop.vue'),
@@ -11,9 +11,9 @@ const routes = [
       auth: false,
 
     }
-  },
+  },*/
   {
-    path: '/auth',
+    path: '/',
     name: 'Auth',
     component: () => import('../views/Auth.vue'),
     meta: {
@@ -21,7 +21,7 @@ const routes = [
       auth: false,
     }
   },
-  {
+/*  {
     path: '/product/:id',
     name: 'Product',
     component: () => import('../views/Product.vue'),
@@ -85,70 +85,81 @@ const routes = [
         }
       }
     ]
-  },
-  {
-    path: '/admin',
+  },*/
+  /*{
+    path: '/',
     name: 'Admin',
     component: () => import('../views/GateWay.vue'),
-    redirect: '/admin/products',
+    redirect: '/products',
+    meta: {
+      layout: 'veh_info',
+      auth: true,
+      veh_info: true
+    },
+  },*/
+  {
+    path: '/products',
+    name: 'AdminProducts',
+    component: () => import('../views/veh_info/ProductList.vue'),
+    meta: {
+      layout: 'admin',
+      auth: true,
+      admin: true
+    }
+  },
+  {
+    path: '/products/:id',
+    name: 'ProductEdit',
+    component: () => import('../views/veh_info/ProductEdit.vue'),
     meta: {
       layout: 'admin',
       auth: true,
       admin: true
     },
-    children: [{
-      path: 'products',
-      name: 'AdminProducts',
-      component: () => import('../views/admin/ProductList.vue'),
-      meta: {
-        layout: 'admin',
-        auth: true,
-        admin: true
-      }
+  },
+  {
+    path: '/tiers',
+    name: 'AdminTiers',
+    component: () => import('../views/veh_info/Tiers.vue'),
+    meta: {
+      layout: 'admin',
+      auth: true,
+      admin: true
+    }
+  },
+  {
+    path: '/tiers/:id',
+    name: 'TierEdit',
+    component: () => import('../views/veh_info/TierEdit.vue'),
+    meta: {
+      layout: 'admin',
+      auth: true,
+      admin: true
     },
-      {
-        path: 'products/:id',
-        name: 'ProductEdit',
-        component: () => import('../views/admin/ProductEdit.vue'),
-        meta: {
-          layout: 'admin',
-          auth: true,
-          admin: true
-        },
-      },
-      {
-        path: 'categories',
-        name: 'AdminCategories',
-        component: () => import('../views/admin/Categories.vue'),
-        meta: {
-          layout: 'admin',
-          auth: true,
-          admin: true
-        }
-      },
-      {
-        path: 'categories/:id',
-        name: 'CategoryEdit',
-        component: () => import('../views/admin/CategoryEdit.vue'),
-        meta: {
-          layout: 'admin',
-          auth: true,
-          admin: true
-        },
-        props: true
-      },
-      {
-        path: 'orders',
-        name: 'AdminOrders',
-        component: () => import('../views/admin/Orders.vue'),
-        meta: {
-          layout: 'admin',
-          auth: true,
-          admin: true
-        }
-      },
-    ]
-  }
+    props: true
+  },
+  {
+    path: '/types',
+    name: 'AdminTypes',
+    component: () => import('../views/veh_info/Types.vue'),
+    meta: {
+      layout: 'admin',
+      auth: true,
+      admin: true
+    }
+  },
+  {
+    path: '/types/:id',
+    name: 'TypeEdit',
+    component: () => import('../views/veh_info/TypesEdit'),
+    meta: {
+      layout: 'admin',
+      auth: true,
+      admin: true
+    },
+    props: true
+  },
+
 ]
 
 const router = createRouter({
@@ -166,7 +177,7 @@ router.beforeEach((to, from, next) => {
     if(store.getters['auth/isAdmin']) {
       return next()
     } else {
-      return next('/auth?message=admin')
+      return next('/auth?message=veh_info')
     }
   }
 
