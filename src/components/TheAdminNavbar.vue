@@ -40,7 +40,7 @@ export default {
     return {
       logout: () => {
         store.commit('auth/logout')
-        router.push('/auth')
+        router.push('/')
       }
     }
   }

@@ -17,11 +17,9 @@ export default {
   },
   mutations: {
     setCurrencies(state, currencies) {
-      console.log(currencies)
       state.currencies = currencies
     },
     setActualCurrency(state, actCur) {
-      console.log(actCur)
       state.actualCurrency = actCur
     },
     addCurrency(state, currency) {
@@ -41,7 +39,6 @@ export default {
     async loadCurrencies({commit, dispatch}) {
       try {
         const currencies = await getAllCurrencies()
-        console.log(currencies)
         commit('setCurrencies', currencies)
       } catch (e) {
         dispatch('setMessage', {
@@ -76,7 +73,6 @@ export default {
     },
     async create({ commit, dispatch }, payload) {
       try {
-        console.log(payload)
         await addCurrency({...payload, id: payload.name})
         commit('addCurrency', {...payload, id: payload.id})
         dispatch('setMessage', {

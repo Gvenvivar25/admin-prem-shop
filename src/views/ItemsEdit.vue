@@ -111,8 +111,7 @@ export default {
         await store.dispatch('type/loadTypes')
       }
       initial = await store.dispatch('item/loadOne', route.params.id)
-     // item.value = {...initial}
-      item.value = JSON.parse(JSON.stringify(initial));
+      item.value = JSON.parse(JSON.stringify(initial))
       loading.value = false
     })
 
@@ -144,7 +143,6 @@ export default {
         item.value.gallery = []
         item.value.gallery.push('')
       }
-
     }
 
     const remove = async () => {

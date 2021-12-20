@@ -5,6 +5,7 @@
       <button class="btn primary" @click="modal = true">Add</button>
     </template>
   </app-page>
+  <product-filter v-model="filter"></product-filter>
 
   <div class="card">
     <product-table
@@ -28,6 +29,7 @@
 
 <script>
 import ProductTable from '@/components/product/ProductTable'
+import ProductFilter from '@/components/product/ProductFilter'
 import AppLoader from '@/components/ui/AppLoader'
 import AppPage from '@/components/ui/AppPage'
 import AppModal from '@/components/ui/AppModal'
@@ -48,6 +50,9 @@ export default {
     const loading = ref(true)
     const PAGE_SIZE = 50
     const page= ref(route.query.page ? route.query.page : 1)
+    const filter = ref({
+      search: route.query.search,
+    })
 
     const _setPage = () => router.replace({query: {page: page.value}})
 
@@ -60,16 +65,16 @@ export default {
       loading.value = false
     })
 
-   // const categories = computed(() => store.getters['tier/categories'])
-
     const products = computed(
         () => store.getters['product/products']
-            /*.map(prod => {
-              if(categories.value.find(cat => cat.type === prod.category)) {
-                prod.category = categories.value.find(cat => cat.type === prod.category).title
+            .filter(product => {
+              if (filter.value.search) {
+                return product.name.toLowerCase().includes(filter.value.search.toLowerCase())
               }
-              return prod
-        })*/)
+              return product
+            })
+            .sort((a, b) => b.count - a.count)
+    )
 
     const paginatedProducts = computed(() => chunk(products.value, PAGE_SIZE)[page.value-1])
 
@@ -80,9 +85,10 @@ export default {
       PAGE_SIZE,
       paginatedProducts,
       page,
+      filter
     }
   },
-  components: {AppPage, ProductTable, AppLoader, AppModal, ProductModal, AppPagination}
+  components: {AppPage, ProductTable, AppLoader, AppModal, ProductModal, AppPagination, ProductFilter}
 }
 </script>
 

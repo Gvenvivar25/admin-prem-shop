@@ -46,13 +46,12 @@ export default {
   actions: {
     async login({ commit, dispatch }, payload) {
       try {
-       // console.log(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDDrD7uNvRMMdXHFrRmgscD4_LwwQQdpmA`)
         const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDDrD7uNvRMMdXHFrRmgscD4_LwwQQdpmA`
         const {data} = await axios.post(url, {...payload, returnSecureToken: true})
-        //console.log(data)
+
         commit('setToken', data)
         commit('clearMessage', null, {root: true})
-       // console.log(data.localId)
+
         await dispatch('getUser', data.localId)
       } catch(e) {
         dispatch('setMessage', {
@@ -68,7 +67,6 @@ export default {
         const {data} = await axios.get(`https://firestore.googleapis.com/v1beta1/projects/premiumshopwot/databases/(default)/documents/users/${localId}`)
         const {fields} = data
         const user = FireStoreParser(fields)
-        console.log(user)
         commit('setUser', {localId: localId, ...user})
         commit('clearMessage', null, {root: true})
       } catch(e) {
@@ -156,7 +154,6 @@ export default {
       return new Date() >= state.expiresDate
     },
     isAdmin(state) {
-      console.log(state.user)
       return state.user.role === 'admin'
     },
     isAuthenticated(_, getters) {

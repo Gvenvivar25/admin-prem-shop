@@ -10,7 +10,10 @@ export function useProductForm(fn) {
     initialValues: {
       //startDate: date,
       isActive: true,
-      items: [{id: '', value: ''}]
+      items: [{id: '', value: ''}],
+      weight: 1,
+      discPer: 0,
+      discValue: 0.00
     }
   })
   /*const store = useStore()
@@ -57,6 +60,23 @@ export function useProductForm(fn) {
     yup.string()
       .required('Choose end sale date')
   )
+  const {value: weight, errorMessage: wError, handleBlur: wBlur} = useField(
+    'weight',
+    yup.number()
+      .required('Enter weight from 1 to ...')
+  )
+
+  const {value: discPer, errorMessage: discError, handleBlur: discBlur} = useField(
+    'discPer',
+    yup.number()
+      .required('Enter discount percentage')
+  )
+  const {value: discValue, errorMessage: discvError, handleBlur: discvBlur} = useField(
+    'discValue',
+    yup.number()
+      .required('Enter discount value')
+  )
+
   const { remove, push, fields } = useFieldArray('category')
   const { remove: remove2, push: push2, fields: fields2 } = useFieldArray('items')
 
@@ -94,6 +114,15 @@ export function useProductForm(fn) {
     fields,
     remove2,
     push2,
-    fields2
+    fields2,
+    weight,
+    wBlur,
+    wError,
+    discPer,
+    discError,
+    discBlur,
+    discValue,
+    discvBlur,
+    discvError
   }
 }

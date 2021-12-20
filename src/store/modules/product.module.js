@@ -1,4 +1,4 @@
-import {addProduct, getAllProducts, getOneProduct, removeProduct} from '@/firebase/product'
+import {addProduct, getAllProducts, getOneProduct, removeProduct, updateProduct} from '@/firebase/product'
 
 export default {
   namespaced: true,
@@ -17,13 +17,14 @@ export default {
       state.products = prods
     },
     addProduct(state, product) {
-      state.products.push(product)
+      state.products.unshift(product)
     },
     updateProductCount(state, {id, count}) {
       const product = state.products.find(p => p.id === id)
       product.count = count
     },
     updateProduct(state, product) {
+      console.log(product)
       const idx = state.products.findIndex(item => item.id === product.id)
       if (idx !== -1) {
         state.products[idx] = product

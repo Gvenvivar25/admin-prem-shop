@@ -1,16 +1,29 @@
-# Admin premium shop
+# Premium shop project Team #5
 
 ## Project url
 
-https://online-shop-vue3.web.app/
+https://online-shop-vue3.web.app/ - вставь сюда ссылку на деплой
 
+Project repo:
+https://github.com/Gvenvivar25/pts-f-21-5
+
+До сдачи планируем доделать логин через openid, фильтрацию товаров
+
+## Admin panel
+Admin panel url:
+https://premiumshopwot.firebaseapp.com/tiers
+
+Admin panel repo:
+https://github.com/Gvenvivar25/admin-prem-shop
 
 ### Admin auth
 ```
 ADMIN:
-user: admin@mail.ru
-password: 111111
+user: admin@gmail.com
+password: 123456
 
 ```
+Это не финальный вариант админки
+Еще до сдачи будет добавлен функционал по работе с товарами и скидками
 
 

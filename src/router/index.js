@@ -15,7 +15,7 @@ const routes = [
   {
     path: '/products',
     name: 'AdminProducts',
-    component: () => import('../views/veh_info/ProductList.vue'),
+    component: () => import('../views/ProductList.vue'),
     meta: {
       layout: 'admin',
       auth: true,
@@ -25,7 +25,7 @@ const routes = [
   {
     path: '/products/:id',
     name: 'ProductEdit',
-    component: () => import('../views/veh_info/ProductEdit.vue'),
+    component: () => import('../views/ProductEdit.vue'),
     meta: {
       layout: 'admin',
       auth: true,

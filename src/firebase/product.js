@@ -1,5 +1,5 @@
 import {db} from './firebase'
-import {collection, deleteDoc, doc, getDoc, getDocs, orderBy, query, addDoc, updateDoc} from 'firebase/firestore'
+import {collection, deleteDoc, doc, getDoc, getDocs, orderBy, query, addDoc, setDoc, updateDoc} from 'firebase/firestore'
 
 export async function getAllProducts ()  {
   const products = []
@@ -30,8 +30,10 @@ export async function addProduct (product) {
   try {
     const resp = await addDoc(collection(db, "products"), product)
     console.log(resp.id)
-    const productRef = doc(db, "products", `${resp.id}`)
-    await updateDoc(productRef, {id: resp.id})
+    const id = resp.id
+    const productRef = doc(db, "products", `${id}`)
+    const updData = {...product, id: id}
+    await setDoc(productRef, updData, {merge: true})
     return resp.id
   } catch (e) {
     throw new Error(e)

@@ -10,6 +10,7 @@
       <th>Category</th>
       <th>discount %</th>
       <th>discount value</th>
+      <th>Priority</th>
       <th>Action</th>
     </tr>
     </thead>
@@ -24,6 +25,7 @@
       <td>{{ prod.category.toString() }}</td>
       <td>{{ prod.discPer }}</td>
       <td>{{ prod.discValue }}</td>
+      <td>{{ prod.weight }}</td>
       <td>
         <button class="btn" @click="$router.push(`/products/${prod.id}`)">Open/edit</button>
       </td>
@@ -41,8 +43,7 @@ export default {
   setup() {
     const store = useStore()
     onMounted(async () => {
-      const act = await store.dispatch('currency/loadActualCurrency')
-      console.log(act)
+      await store.dispatch('currency/loadActualCurrency')
     })
 
     const actCur = computed(() => store.getters['currency/actualCurrency'])

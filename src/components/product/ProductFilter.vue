@@ -1,68 +1,37 @@
 <template>
   <div class="products-filter">
     <div class="form-control">
-      <input type="text" placeholder="Найти товар..." v-model="search">
+      <input type="text" placeholder="Search product..." v-model="search">
       <span class="form-control-clear" @click="search = '' ">&times;</span>
     </div>
-
-    <ul class="list">
-      <li class="list-item" :class="currentCat === 'all' ? 'active' : '' "
-          @click="category = '', currentCat = 'all'">Все</li>
-      <li class="list-item"
-          :class="currentCat === cat.type ? 'active' : '' "
-          v-for="cat in categories"
-          :key="cat.id"
-          @click="changeCategory(cat.type)">
-        {{ cat.title }}
-      </li>
-    </ul>
   </div>
 </template>
 
 <script>
-import {ref, onMounted, computed, watch} from 'vue'
-import {useStore} from 'vuex'
+import {ref, watch} from 'vue'
+
 import {useRouter} from 'vue-router'
-import {useCategories} from '@/use/categories'
+
 
 export default {
   emits: ['update:modelValue'],
   props: ['modelValue'],
   setup(props, {emit}) {
-    const store = useStore()
+   // const store = useStore()
     const router = useRouter()
     const search = ref(props.modelValue.search || '')
-    const category = ref(props.modelValue.category || '')
-    const currentCat = ref('all')
 
-    onMounted(async () => {
-      await useCategories()
-    })
-    const categories = computed(() => store.getters['tier/categories'])
-
-    const changeCategory = (cat) => {
-      category.value = cat
-    }
-
-    watch([search, category], values => {
+    watch([search], values => {
       const query = {}
       if (values[0]) {
         query.search = values[0]
       }
-      if (values[1]) {
-        query.category = values[1]
-        currentCat.value = values[1]
-      }
       router.push({query: query})
-      emit('update:modelValue', {search, category})
+      emit('update:modelValue', {search})
     })
 
     return {
-      category,
       search,
-      categories,
-      changeCategory,
-      currentCat
     }
   }
 

@@ -666,8 +666,7 @@ h3 {
 
 .products-filter {
     padding: 1rem;
-    width: 250px;
-    border-right: 1px solid #ccc;
+    width: 50%;
 }
 
 .products-table {

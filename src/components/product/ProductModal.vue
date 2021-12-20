@@ -61,7 +61,7 @@
       <button type="button" class="btn primary" @click="push('')">Add</button>
     </div>
 
-    <label for="name">Items (click add button to add category)</label>
+    <label for="name">Items (click add button to add item and it's quantity in product)</label>
     <div class="form-control" v-for="(field, idx) in fields2" :key="idx">
 
       <div class="input_flex">
@@ -74,12 +74,23 @@
       <button type="button" class="btn primary" @click="push2({id: '', value: ''})">Add</button>
     </div>
 
-    <!--<div class="form-control">
-      <label for="category">Категория</label>
-      <select id="category" v-model="category">
-        <option v-for="cat in categories" :key="cat.id" :value="cat.type">{{ cat.title }}</option>
-      </select>
-    </div>-->
+    <div class="form-control" :class="{invalid: pError}">
+      <label for="weight">Priority (1- low, ... 1000 - high)</label>
+      <input type="number" id="weight" v-model.number="weight" @blur="wBlur">
+      <small v-if="wError">{{wError}}</small>
+    </div>
+
+    <div class="form-control" :class="{invalid: pError}">
+      <label for="discPer">Discount, %</label>
+      <input type="number" id="discPer" v-model.number="discPer" @blur="discBlur">
+      <small v-if="discError">{{discError}}</small>
+    </div>
+
+    <div class="form-control" :class="{invalid: pError}">
+      <label for="discValue">Discount, $</label>
+      <input type="number" step="0.001" id="discValue" v-model.number="discValue" @blur="discvBlur">
+      <small v-if="discvError">{{discvError}}</small>
+    </div>
 
     <button class="btn primary" :disabled="isSubmitting">Create</button>
   </form>
@@ -87,18 +98,18 @@
 </template>
 
 <script>
-/*import {useStore} from 'vuex'
-import {onMounted} from 'vue'*/
+import {useStore} from 'vuex'
+/*import {onMounted} from 'vue'*/
 import {Field} from 'vee-validate'
 import {Timestamp} from 'firebase/firestore'
 import {useProductForm} from '@/use/product-form'
 
 export default {
   emits: ['created-prod'],
-  setup(/*_, {emit}*/) {
-    /*const store = useStore()
+  setup(_, {emit}) {
+    const store = useStore()
 
-    onMounted(() => {
+    /*onMounted(() => {
       store.dispatch('tier/loadCategories')
     })*/
 
@@ -106,9 +117,15 @@ export default {
     const submit = async values => {
       values.startDate = Timestamp.fromDate(new Date(values.startDate))
       values.endDate = Timestamp.fromDate(new Date(values.endDate))
+      const obj = {}
+      for(let i = 0; i < values.items.length; i++) {
+        let item = Object.values(values.items[i])
+        obj[item[0]] = Number(item[1])
+      }
+      values.items = obj
       console.log(values)
-      /*await store.dispatch('product/create', values)
-      emit('created-prod')*/
+      await store.dispatch('product/create', values)
+      emit('created-prod')
     }
 
     return {
