@@ -2,7 +2,7 @@
 
 ## Project url
 
-https://online-shop-vue3.web.app/ - вставь сюда ссылку на деплой
+https://premium-shop-wg.herokuapp.com/
 
 Project repo:
 https://github.com/Gvenvivar25/pts-f-21-5
