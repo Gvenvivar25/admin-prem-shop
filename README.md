@@ -11,7 +11,7 @@ https://github.com/Gvenvivar25/pts-f-21-5
 
 ## Admin panel
 Admin panel url:
-https://premiumshopwot.firebaseapp.com/tiers
+https://premiumshopwot.firebaseapp.com/
 
 Admin panel repo:
 https://github.com/Gvenvivar25/admin-prem-shop
