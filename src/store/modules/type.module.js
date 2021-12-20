@@ -1,6 +1,5 @@
 import {addType, getAllTypes, getOneType, removeType, updateType} from '@/firebase/type'
 
-
 export default {
   namespaced: true,
   state() {
@@ -48,7 +47,7 @@ export default {
     async create({ commit, dispatch }, payload) {
       try {
         await addType({...payload, id: payload.name})
-        commit('addType', payload)
+        commit('addType', {...payload, id: payload.name})
         dispatch('setMessage', {
           value: 'Type is successfully added',
           type: 'primary'
@@ -63,7 +62,7 @@ export default {
     async update({commit, dispatch }, type) {
       try {
         await updateType(type)
-        commit('updateTu=ype', type)
+        commit('updateType', type)
         dispatch('setMessage', {
           value: 'Type is successfully updated',
           type: 'primary'

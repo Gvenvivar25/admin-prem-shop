@@ -2,7 +2,7 @@
   <component :is="layout + '-layout'" v-if="layout"></component>
 </template>
 <script>
-import MainLayout from '@/layout/MainLayout'
+
 import AuthLayout from '@/layout/AuthLayout'
 import AdminLayout from '@/layout/AdminLayout'
 import {useRoute} from 'vue-router'
@@ -15,7 +15,7 @@ export default {
       layout: computed(() => route.meta.layout)
     }
   },
-  components: {MainLayout, AuthLayout, AdminLayout}
+  components: { AuthLayout, AdminLayout}
 }
 </script>
 <style lang="scss">

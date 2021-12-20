@@ -2,16 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import store from '@/store'
 
 const routes = [
-  /*{
-    path: '/',
-    name: 'Shop',
-    component: () => import('../views/Shop.vue'),
-    meta: {
-      layout: 'main',
-      auth: false,
-
-    }
-  },*/
   {
     path: '/',
     name: 'Auth',
@@ -21,82 +11,7 @@ const routes = [
       auth: false,
     }
   },
-/*  {
-    path: '/product/:id',
-    name: 'Product',
-    component: () => import('../views/Product.vue'),
-    meta: {
-      layout: 'main',
-      auth: false,
-    }
-  },
-  {
-    path: '/cart',
-    name: 'Cart',
-    component: () => import('../views/Cart.vue'),
-    meta: {
-      layout: 'main',
-      auth: false,
-    }
-  },
-  {
-    path: '/thanks',
-    name: 'Thanks',
-    component: () => import('../views/Thanks.vue'),
-    meta: {
-      layout: 'main',
-      auth: true,
-    }
-  },
-  {
-    path: '/account',
-    name: 'Account',
-    component: () => import('../views/GateWay.vue'),
-    redirect: '/account/main',
-    meta: {
-      layout: 'main',
-      auth: false,
-    },
-    children: [{
-      path: 'main',
-      name: 'AccountMainPage',
-      component: () => import('../views/account/Account.vue'),
-      meta: {
-        layout: 'main',
-        auth: false,
-      }
-    },
-      {
-        path: 'personal',
-        name: 'PersonalData',
-        component: () => import('../views/account/PersonalData.vue'),
-        meta: {
-          layout: 'main',
-          auth: true,
-        }
-      },
-      {
-        path: 'orders',
-        name: 'Orders',
-        component: () => import('../views/account/Orders.vue'),
-        meta: {
-          layout: 'main',
-          auth: true,
-        }
-      }
-    ]
-  },*/
-  /*{
-    path: '/',
-    name: 'Admin',
-    component: () => import('../views/GateWay.vue'),
-    redirect: '/products',
-    meta: {
-      layout: 'veh_info',
-      auth: true,
-      veh_info: true
-    },
-  },*/
+
   {
     path: '/products',
     name: 'AdminProducts',
@@ -117,6 +32,50 @@ const routes = [
       admin: true
     },
   },
+  {
+    path: '/items',
+    name: 'AdminItems',
+    component: () => import('../views/Items.vue'),
+    meta: {
+      layout: 'admin',
+      auth: true,
+      admin: true
+    }
+  },
+  {
+    path: '/items/:id',
+    name: 'ItemsEdit',
+    component: () => import('../views/ItemsEdit.vue'),
+    meta: {
+      layout: 'admin',
+      auth: true,
+      admin: true
+    },
+    props: true
+  },
+  {
+    path: '/currencies',
+    name: 'AdminCurrencies',
+    component: () => import('../views/Currencies.vue'),
+    meta: {
+      layout: 'admin',
+      auth: true,
+      admin: true
+    }
+  },
+
+  {
+    path: '/currencies/:id',
+    name: 'CurrencyEdit',
+    component: () => import('../views/CurrencyEdit.vue'),
+    meta: {
+      layout: 'admin',
+      auth: true,
+      admin: true
+    },
+    props: true
+  },
+
   {
     path: '/tiers',
     name: 'AdminTiers',
@@ -152,6 +111,28 @@ const routes = [
     path: '/types/:id',
     name: 'TypeEdit',
     component: () => import('../views/veh_info/TypesEdit'),
+    meta: {
+      layout: 'admin',
+      auth: true,
+      admin: true
+    },
+    props: true
+  },
+
+  {
+    path: '/nations',
+    name: 'AdminNations',
+    component: () => import('../views/veh_info/Nations.vue'),
+    meta: {
+      layout: 'admin',
+      auth: true,
+      admin: true
+    }
+  },
+  {
+    path: '/nations/:id',
+    name: 'NationEdit',
+    component: () => import('../views/veh_info/NationsEdit.vue'),
     meta: {
       layout: 'admin',
       auth: true,

@@ -1,64 +1,99 @@
-import {useField, useForm} from 'vee-validate'
+import {useField, useFieldArray, useForm} from 'vee-validate'
 import * as yup from 'yup'
-import {useStore} from 'vuex'
-import { computed} from 'vue'
+/*import {useStore} from 'vuex'
+import { computed} from 'vue'*/
 
 export function useProductForm(fn) {
+  /*let date= new Date()
+  date = date.toISOString().split('T')[0]*/
   const {isSubmitting, handleSubmit} = useForm({
     initialValues: {
-      category: 'fruit'
+      //startDate: date,
+      isActive: true,
+      items: [{id: '', value: ''}]
     }
   })
-  const store = useStore()
+  /*const store = useStore()
 
-  const categories = computed (() => store.getters['tier/categories'])
+  const categories = computed (() => store.getters['tier/categories'])*/
 
-  const {value: title, errorMessage: tError, handleBlur: tBlur} = useField(
-    'title',
+  const {value: name, errorMessage: tError, handleBlur: tBlur} = useField(
+    'name',
     yup.string()
       .trim()
-      .required('Введите наименование товара')
+      .required('Enter product name')
+  )
+  const {value: image, errorMessage: iError, handleBlur: iBlur} = useField(
+    'image',
+    yup.string()
+      .required('Enter image url')
+  )
+  const {value: card_image} = useField(
+    'card_image',
+    yup.string()
+      .required('Enter image url')
   )
   const {value: price, errorMessage: pError, handleBlur: pBlur} = useField(
     'price',
     yup.number()
-      .required('Введите цену')
-      .min(10, 'Цена не может быть меньше 10')
+      .required('Enter price')
   )
-  const {value: count, errorMessage: cError, handleBlur: cBlur} = useField(
-    'count',
-    yup.number()
-      .required('Введите количество')
-      .min(0, 'Количество не может быть меньше 0')
-  )
-
-  const {value: img, errorMessage: iError, handleBlur: iBlur} = useField(
-    'img',
+  const {value: description, errorMessage: dError, handleBlur: dBlur} = useField(
+    'description',
     yup.string()
-      .trim()
-      .required('Введите ссылку на изображение')
+      .required('Enter description text')
   )
+  const {value: isActive, errorMessage: aError, handleBlur: aBlur} = useField(
+    'isActive',
+    yup.boolean()
+  )
+  const {value: startDate, errorMessage: stError, handleBlur: stBlur} = useField(
+    'startDate',
+    yup.string()
+      .required('Choose start sale date')
+  )
+  const {value: endDate, errorMessage: edError, handleBlur: edBlur} = useField(
+    'endDate',
+    yup.string()
+      .required('Choose end sale date')
+  )
+  const { remove, push, fields } = useFieldArray('category')
+  const { remove: remove2, push: push2, fields: fields2 } = useFieldArray('items')
 
-  const {value: category} = useField('category')
+  /*const {value: category} = useField('category')*/
 
   const onSubmit = handleSubmit(fn)
 
   return {
-    category,
     isSubmitting,
     onSubmit,
-    title,
+    name,
+    image,
+    card_image,
+    iError,
+    iBlur,
     tBlur,
     tError,
     price,
-    count,
     pError,
     pBlur,
-    cError,
-    cBlur,
-    img,
-    iBlur,
-    iError,
-    categories
+    description,
+    dBlur,
+    dError,
+    isActive,
+    aError,
+    aBlur,
+    startDate,
+    stBlur,
+    stError,
+    endDate,
+    edError,
+    edBlur,
+    remove,
+    push,
+    fields,
+    remove2,
+    push2,
+    fields2
   }
 }

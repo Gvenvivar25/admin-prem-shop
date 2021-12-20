@@ -7,6 +7,12 @@
         <router-link to="/products">Products</router-link>
       </li>
       <li>
+        <router-link to="/items">In-game items</router-link>
+      </li>
+      <li>
+        <router-link to="/currencies">Currencies</router-link>
+      </li>
+      <li>
         <router-link to="/tiers">Tiers</router-link>
       </li>
       <li>

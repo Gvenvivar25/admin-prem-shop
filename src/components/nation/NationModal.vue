@@ -25,19 +25,19 @@
 
 <script>
 import {useStore} from 'vuex'
-import {useTypeForm} from '@/use/type-form'
+import {useNationForm} from '@/use/nation-form'
 export default {
   emits: ['created'],
   setup(_, {emit}) {
     const store = useStore()
 
     const submit = async values => {
-      await store.dispatch('type/create', values)
+      await store.dispatch('nation/create', values)
       emit('created')
     }
 
     return {
-      ...useTypeForm(submit),
+      ...useNationForm(submit),
     }
   }
 }

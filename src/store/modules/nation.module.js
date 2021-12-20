@@ -1,40 +1,33 @@
-import {addProduct, getAllProducts, getOneProduct, removeProduct} from '@/firebase/product'
+import {addNation, getAllNations, getOneNation, removeNation, updateNation} from '@/firebase/nation'
+
 
 export default {
   namespaced: true,
   state() {
     return {
-      products: []
-    }
-  },
-  getters: {
-    products(state) {
-      return state.products
+      nations: []
     }
   },
   mutations: {
-    setProducts(state, prods) {
-      state.products = prods
+    setNations(state, nations) {
+      state.nations = nations
     },
-    addProduct(state, product) {
-      state.products.push(product)
+    addNation(state, nation) {
+      state.nations.push(nation)
     },
-    updateProductCount(state, {id, count}) {
-      const product = state.products.find(p => p.id === id)
-      product.count = count
-    },
-    updateProduct(state, product) {
-      const idx = state.products.findIndex(item => item.id === product.id)
+    updateNation(state, nation) {
+      const idx = state.nations.findIndex(item => item.id === nation.id)
       if (idx !== -1) {
-        state.products[idx] = product
+        state.nations[idx] = nation
       }
     }
   },
   actions: {
-    async loadProducts({commit, dispatch}) {
+    async loadNations({commit, dispatch}) {
       try {
-        const products = await getAllProducts()
-        commit('setProducts', products)
+        const nations = await getAllNations()
+        console.log(nations)
+        commit('setNations', nations)
       } catch (e) {
         dispatch('setMessage', {
           value: e.message,
@@ -44,7 +37,7 @@ export default {
     },
     async loadOne({ dispatch}, id) {
       try {
-        return await getOneProduct(id)
+        return await getOneNation(id)
       } catch (e) {
         dispatch('setMessage', {
           value: e.message,
@@ -54,10 +47,10 @@ export default {
     },
     async create({ commit, dispatch }, payload) {
       try {
-        const id = await addProduct(payload)
-        commit('addProduct', {...payload, id: id})
+        await addNation({...payload, id: payload.name})
+        commit('addNation', {...payload, id: payload.name})
         dispatch('setMessage', {
-          value: 'Product is successfully added',
+          value: 'Nation is successfully added',
           type: 'primary'
         }, {root: true})
       } catch (e) {
@@ -67,15 +60,15 @@ export default {
         }, {root: true})
       }
     },
-    async update({commit, dispatch }, product) {
+    async update({commit, dispatch }, nation) {
       try {
-        await updateProduct(product)
-        commit('updateProduct', product)
+        await updateNation(nation)
+        commit('updateNation', nation)
         dispatch('setMessage', {
-          value: 'Product is successfully updated',
+          value: 'Nation is successfully updated',
           type: 'primary'
         }, {root: true})
-        return product
+        return nation
       } catch (e) {
         dispatch('setMessage', {
           value: e.message,
@@ -85,10 +78,10 @@ export default {
     },
     async delete({dispatch}, id) {
       try {
-        await removeProduct(id)
-        dispatch('loadProducts')
+        await removeNation(id)
+        dispatch('loadNations')
         dispatch('setMessage', {
-          value: 'Product is deleted',
+          value: 'Nation is deleted',
           type: 'primary'
         }, {root: true})
       } catch (e) {
@@ -97,6 +90,11 @@ export default {
           type: 'danger'
         }, {root: true})
       }
+    }
+  },
+  getters: {
+    nations(state) {
+      return state.nations
     }
   }
 }

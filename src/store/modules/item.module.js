@@ -1,40 +1,31 @@
-import {addProduct, getAllProducts, getOneProduct, removeProduct} from '@/firebase/product'
+import {addItem, getAllItems, getOneItem, removeItem, updateItem} from '@/firebase/item'
 
 export default {
   namespaced: true,
   state() {
     return {
-      products: []
-    }
-  },
-  getters: {
-    products(state) {
-      return state.products
+      items: []
     }
   },
   mutations: {
-    setProducts(state, prods) {
-      state.products = prods
+    setItems(state, items) {
+      state.items = items
     },
-    addProduct(state, product) {
-      state.products.push(product)
+    addItem(state, item) {
+      state.items.unshift(item)
     },
-    updateProductCount(state, {id, count}) {
-      const product = state.products.find(p => p.id === id)
-      product.count = count
-    },
-    updateProduct(state, product) {
-      const idx = state.products.findIndex(item => item.id === product.id)
+    updateItem(state, item) {
+      const idx = state.items.findIndex(it => it.id === item.id)
       if (idx !== -1) {
-        state.products[idx] = product
+        state.items[idx] = item
       }
     }
   },
   actions: {
-    async loadProducts({commit, dispatch}) {
+    async loadItems({commit, dispatch}) {
       try {
-        const products = await getAllProducts()
-        commit('setProducts', products)
+        const items = await getAllItems()
+        commit('setItems', items)
       } catch (e) {
         dispatch('setMessage', {
           value: e.message,
@@ -44,7 +35,7 @@ export default {
     },
     async loadOne({ dispatch}, id) {
       try {
-        return await getOneProduct(id)
+        return await getOneItem(id)
       } catch (e) {
         dispatch('setMessage', {
           value: e.message,
@@ -54,10 +45,10 @@ export default {
     },
     async create({ commit, dispatch }, payload) {
       try {
-        const id = await addProduct(payload)
-        commit('addProduct', {...payload, id: id})
+        await addItem(payload)
+        commit('addItem', payload)
         dispatch('setMessage', {
-          value: 'Product is successfully added',
+          value: 'Item is successfully added',
           type: 'primary'
         }, {root: true})
       } catch (e) {
@@ -67,15 +58,15 @@ export default {
         }, {root: true})
       }
     },
-    async update({commit, dispatch }, product) {
+    async update({commit, dispatch }, item) {
       try {
-        await updateProduct(product)
-        commit('updateProduct', product)
+        await updateItem(item)
+        commit('updateItem', item)
         dispatch('setMessage', {
-          value: 'Product is successfully updated',
+          value: 'Item is successfully updated',
           type: 'primary'
         }, {root: true})
-        return product
+        return item
       } catch (e) {
         dispatch('setMessage', {
           value: e.message,
@@ -85,10 +76,10 @@ export default {
     },
     async delete({dispatch}, id) {
       try {
-        await removeProduct(id)
-        dispatch('loadProducts')
+        await removeItem(id)
+        dispatch('loadItems')
         dispatch('setMessage', {
-          value: 'Product is deleted',
+          value: 'Item is deleted',
           type: 'primary'
         }, {root: true})
       } catch (e) {
@@ -97,6 +88,11 @@ export default {
           type: 'danger'
         }, {root: true})
       }
+    }
+  },
+  getters: {
+    items(state) {
+      return state.items
     }
   }
 }

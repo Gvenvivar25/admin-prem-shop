@@ -1,8 +1,3 @@
-/*import axios from '@/axios/request'*/
-//import axios from 'axios'
-//import {transform} from '@/utils/transform'
-//const url = 'https://firestore.googleapis.com/v1beta1/projects/premiumshopwot/databases/(default)/documents/veh_tiers/'
-//import FireStoreParser from 'firestore-parser'
 import {addTier, getAllTiers, getOneTier, removeTier, updateTier} from '@/firebase/firebase'
 export default {
   namespaced: true,
@@ -60,7 +55,7 @@ export default {
     async create({ commit, dispatch }, payload) {
       try {
         await addTier({...payload, id: payload.tier})
-        commit('addTier', payload)
+        commit('addTier', {...payload, id: payload.tier})
         dispatch('setMessage', {
           value: 'Tier is successfully added',
           type: 'primary'
