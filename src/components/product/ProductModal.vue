@@ -74,19 +74,19 @@
       <button type="button" class="btn primary" @click="push2({id: '', value: ''})">Add</button>
     </div>
 
-    <div class="form-control" :class="{invalid: pError}">
+    <div class="form-control" :class="{invalid: wError}">
       <label for="weight">Priority (1- low, ... 1000 - high)</label>
       <input type="number" id="weight" v-model.number="weight" @blur="wBlur">
       <small v-if="wError">{{wError}}</small>
     </div>
 
-    <div class="form-control" :class="{invalid: pError}">
+    <div class="form-control" :class="{invalid: discError}">
       <label for="discPer">Discount, %</label>
       <input type="number" id="discPer" v-model.number="discPer" @blur="discBlur">
       <small v-if="discError">{{discError}}</small>
     </div>
 
-    <div class="form-control" :class="{invalid: pError}">
+    <div class="form-control" :class="{invalid: discvError}">
       <label for="discValue">Discount, $</label>
       <input type="number" step="0.001" id="discValue" v-model.number="discValue" @blur="discvBlur">
       <small v-if="discvError">{{discvError}}</small>

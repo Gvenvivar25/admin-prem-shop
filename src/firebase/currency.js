@@ -10,7 +10,6 @@ export async function getAllCurrencies ()  {
     currenciesData.forEach((doc) => {
       currencies.push({...doc.data()})
     })
-    console.log(currencies)
     return currencies
   } catch (e) {
     throw new Error(e)

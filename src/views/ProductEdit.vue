@@ -181,7 +181,6 @@ export default {
         let item = Object.values(items.value[i])
         obj[item[0]] = Number(item[1])
       }
-      console.log(obj)
       product.value.items = obj
     }
     const pushCategory = () => {
@@ -208,31 +207,23 @@ export default {
     }
 
     const onUpdate = async () => {
-      console.log(items.value)
       const obj = {}
       for(let i = 0; i < items.value.length; i++) {
         let item = Object.values(items.value[i])
         obj[item[0]] = Number(item[1])
       }
-      console.log(obj)
       product.value.items = obj
       product.value.weight = Number( product.value.weight)
 
       product.value.startDate = Timestamp.fromDate(new Date(product.value.startDate))
       product.value.endDate = Timestamp.fromDate(new Date(product.value.endDate))
-      console.log(product.value)
 
       initial = await store.dispatch('product/update', product.value)
-      console.log(initial)
       initial.startDate = new Timestamp(initial.startDate.seconds+86400, initial.startDate.nanoseconds)
           .toDate().toISOString().split('T')[0]
       initial.endDate = new Timestamp(initial.endDate.seconds+86400, initial.endDate.nanoseconds)
           .toDate().toISOString().split('T')[0]
-      /*Object.entries(initial.items).map(([key, value]) => {
 
-        items.value.push({id: key, value: value})
-      })*/
-      console.log(items.value)
       product.value = JSON.parse(JSON.stringify(initial))
     }
 

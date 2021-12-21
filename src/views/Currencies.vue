@@ -69,8 +69,6 @@ export default {
     const setCurrency = async () => {
       confirm.value = false
       const newCur = {...currencies.value.find(cur => cur.name === actCur.value.name)}
-      console.log(newCur)
-      console.log(currencies.value)
       await store.dispatch('currency/updateActCur', newCur)
     }
 

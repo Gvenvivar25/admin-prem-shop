@@ -10,7 +10,6 @@ export async function getAllTypes ()  {
     typesData.forEach((doc) => {
       types.push({...doc.data()})
     })
-    console.log(types)
     return types
   } catch (e) {
     throw new Error(e)

@@ -2,6 +2,7 @@
   <table class="table">
     <thead>
     <tr>
+      <th>Check</th>
       <th>№</th>
       <th> Name </th>
       <th>Image</th>
@@ -16,6 +17,7 @@
     </thead>
     <tbody>
     <tr v-for="(prod, idx) in products" :key="prod.id">
+      <td><input type="checkbox" :value="prod.id" v-model="selectedProds" @change="checkbox()"></td>
       <td>{{ idx + 1 }}</td>
       <td>{{ prod.name }}</td>
       <td ><img :src="prod.image" alt="Img" class="product-list-img"></td>
@@ -36,19 +38,26 @@
 
 <script>
 
-import {onMounted, computed} from 'vue'
+import {onMounted, computed, ref} from 'vue'
 import {useStore} from 'vuex'
 export default {
   props: ['products'],
-  setup() {
+  emits: ['checkbox'],
+  setup(_, {emit}) {
     const store = useStore()
+    const selectedProds = ref([])
     onMounted(async () => {
       await store.dispatch('currency/loadActualCurrency')
     })
 
     const actCur = computed(() => store.getters['currency/actualCurrency'])
+    const checkbox = () => {
+      emit('checkbox', selectedProds)
+    }
     return {
-      actCur
+      actCur,
+      selectedProds,
+      checkbox
     }
   }
 }

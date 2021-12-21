@@ -200,6 +200,12 @@ h3 {
     justify-content: space-between;
 }
 
+.flex_center {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
 .input_flex .btn {
     margin: 0 0 0 10px;
 }

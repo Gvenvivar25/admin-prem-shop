@@ -23,16 +23,7 @@ export default {
   actions: {
     async loadTiers({commit, dispatch}) {
       try {
-        /*const {data} = await axios.get(url)
-        console.log(data)
-        const fields = []
-        data.documents.forEach(doc => {
-          fields.push(doc.fields)
-        })
-        console.log(fields)
-        const tiers = FireStoreParser(fields)*/
         const tiers = await getAllTiers()
-        console.log(tiers)
         commit('setTiers', tiers)
       } catch (e) {
         dispatch('setMessage', {

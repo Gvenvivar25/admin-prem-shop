@@ -25,7 +25,6 @@ export default {
     async loadTypes({commit, dispatch}) {
       try {
         const types = await getAllTypes()
-        console.log(types)
         commit('setTypes', types)
       } catch (e) {
         dispatch('setMessage', {

@@ -26,7 +26,6 @@ export default {
     async loadNations({commit, dispatch}) {
       try {
         const nations = await getAllNations()
-        console.log(nations)
         commit('setNations', nations)
       } catch (e) {
         dispatch('setMessage', {

@@ -5,11 +5,15 @@
       <button class="btn primary" @click="modal = true">Add</button>
     </template>
   </app-page>
-  <product-filter v-model="filter"></product-filter>
+  <div class="flex_center">
+    <product-filter v-model="filter"></product-filter>
+    <button class="btn" v-if="checked" @click="discount = true">Set discount</button>
+  </div>
 
   <div class="card">
     <product-table
         :products="paginatedProducts"
+        @checkbox="showButton"
     ></product-table>
 
     <app-pagination
@@ -19,6 +23,12 @@
     >
     </app-pagination>
   </div>
+
+  <teleport to="body">
+    <app-modal v-if="discount" title="Set discount" @close="discount = false">
+      <discount-modal @created-disc="discount = false" :checkedProds="checkedProds" />
+    </app-modal>
+  </teleport>
 
   <teleport to="body">
     <app-modal v-if="modal" title="Add product" @close="modal = false">
@@ -39,6 +49,7 @@ import {useStore} from 'vuex'
 import {useRoute, useRouter} from 'vue-router'
 import {onMounted, computed, ref, watch} from 'vue'
 import {chunk} from 'lodash'
+import DiscountModal from '@/components/product/DiscountModal'
 
 
 export default {
@@ -47,6 +58,9 @@ export default {
     const router = useRouter()
     const store = useStore()
     const modal = ref(false)
+    const checked = ref(false)
+    const discount = ref(false)
+    const checkedProds = ref({})
     const loading = ref(true)
     const PAGE_SIZE = 50
     const page= ref(route.query.page ? route.query.page : 1)
@@ -55,6 +69,10 @@ export default {
     })
 
     const _setPage = () => router.replace({query: {page: page.value}})
+    const showButton = (prods) => {
+      checked.value = true
+      checkedProds.value = prods.value
+    }
 
     watch(page, _setPage)
 
@@ -85,10 +103,14 @@ export default {
       PAGE_SIZE,
       paginatedProducts,
       page,
-      filter
+      filter,
+      showButton,
+      checked,
+      discount,
+      checkedProds
     }
   },
-  components: {AppPage, ProductTable, AppLoader, AppModal, ProductModal, AppPagination, ProductFilter}
+  components: {AppPage, ProductTable, AppLoader, AppModal, ProductModal, AppPagination, ProductFilter, DiscountModal}
 }
 </script>
 

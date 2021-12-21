@@ -129,7 +129,6 @@ export default {
       if(values.tier) {
         values.tier = Number(values.tier)
       }
-      console.log(values)
       const payload = JSON.parse(JSON.stringify(values, null, 2))
       await store.dispatch('item/create', payload)
       emit('created')

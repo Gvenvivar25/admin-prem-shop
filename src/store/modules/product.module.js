@@ -19,12 +19,12 @@ export default {
     addProduct(state, product) {
       state.products.unshift(product)
     },
-    updateProductCount(state, {id, count}) {
+    updateProductDiscount(state, {id, discPer, discValue}) {
       const product = state.products.find(p => p.id === id)
-      product.count = count
+      product.discPer = discPer
+      product.discValue = discValue
     },
     updateProduct(state, product) {
-      console.log(product)
       const idx = state.products.findIndex(item => item.id === product.id)
       if (idx !== -1) {
         state.products[idx] = product
@@ -84,6 +84,24 @@ export default {
         }, {root: true})
       }
     },
+
+    async updateDiscount({commit, dispatch }, product) {
+      try {
+        await updateProduct(product)
+        commit('updateProductDiscount', product)
+        dispatch('setMessage', {
+          value: 'Discounts are successfully updated',
+          type: 'primary'
+        }, {root: true})
+        return product
+      } catch (e) {
+        dispatch('setMessage', {
+          value: e.message,
+          type: 'danger'
+        }, {root: true})
+      }
+    },
+
     async delete({dispatch}, id) {
       try {
         await removeProduct(id)

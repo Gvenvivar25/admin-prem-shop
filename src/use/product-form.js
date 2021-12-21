@@ -1,14 +1,11 @@
 import {useField, useFieldArray, useForm} from 'vee-validate'
 import * as yup from 'yup'
-/*import {useStore} from 'vuex'
-import { computed} from 'vue'*/
 
 export function useProductForm(fn) {
-  /*let date= new Date()
-  date = date.toISOString().split('T')[0]*/
+
   const {isSubmitting, handleSubmit} = useForm({
     initialValues: {
-      //startDate: date,
+
       isActive: true,
       items: [{id: '', value: ''}],
       weight: 1,
@@ -16,9 +13,6 @@ export function useProductForm(fn) {
       discValue: 0.00
     }
   })
-  /*const store = useStore()
-
-  const categories = computed (() => store.getters['tier/categories'])*/
 
   const {value: name, errorMessage: tError, handleBlur: tBlur} = useField(
     'name',

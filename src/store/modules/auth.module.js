@@ -1,8 +1,5 @@
 import axios from 'axios'
-import requestAxios from '@/axios/request'
 import {error} from '@/utils/error'
-import store from '@/store'
-import router from '@/router'
 import FireStoreParser from 'firestore-parser'
 
 const TOKEN_KEY = 'jwt-token'
@@ -114,7 +111,7 @@ export default {
         throw new Error(e)
       }
     },
-    async createUser(_, payload) {
+    /*async createUser(_, payload) {
       try {
         await requestAxios.put(`/users/${payload.localId}.json?auth=${payload.idToken}`,
           { name: '', role: 'customer', email: payload.email})
@@ -122,8 +119,8 @@ export default {
         console.log(e)
       }
       await router.push({name: 'Account'})
-    },
-    async updateUser({commit, dispatch }, user) {
+    },*/
+    /*async updateUser({commit, dispatch }, user) {
       try {
         await requestAxios.put(`/users/${store.getters['auth/localId']}.json`, user)
         commit('setUser', user)
@@ -138,7 +135,7 @@ export default {
           type: 'danger'
         }, {root: true})
       }
-    },
+    },*/
   },
   getters: {
     token(state) {

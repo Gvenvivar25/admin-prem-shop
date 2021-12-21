@@ -29,7 +29,6 @@ export async function getOneProduct (id)  {
 export async function addProduct (product) {
   try {
     const resp = await addDoc(collection(db, "products"), product)
-    console.log(resp.id)
     const id = resp.id
     const productRef = doc(db, "products", `${id}`)
     const updData = {...product, id: id}

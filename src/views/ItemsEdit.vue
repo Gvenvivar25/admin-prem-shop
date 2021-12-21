@@ -152,7 +152,6 @@ export default {
     }
 
     const onUpdate = async () => {
-      console.log(JSON.stringify(item.value, null, 2));
       if(item.value.tier) {
         item.value.tier = Number(item.value.tier)
       }

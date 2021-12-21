@@ -36,7 +36,6 @@ export async function getAllTiers ()  {
     tiersData.forEach((doc) => {
       tiers.push({...doc.data()})
     })
-    console.log(tiers)
     return tiers
   } catch (e) {
     throw new Error(e)
