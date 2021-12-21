@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="onSubmit">
-    <h1>Вход в систему</h1>
+    <h1>Admin panel Premium Shop</h1>
 
     <div :class="['form-control', {invalid: eError}]">
       <label for="email">Email</label>
@@ -17,15 +17,15 @@
     <button class="btn primary"
             type="submit" @click.prevent="onSubmit"
             :disabled="isSubmitting || tooManyAttempts">
-      Войти
+      Sign in
     </button>
-    <button class="btn"
+    <!--<button class="btn"
             type="submit" @click.prevent="onSignUp"
             :disabled="isSubmitting || tooManyAttempts">
       Зарегистрироваться
-    </button>
+    </button>-->
     <div class="text-danger" v-if="tooManyAttempts">
-      Вы слишком часто пытаетесь войти в систему. Попробуйте позже
+      Too many attempts to sing in. Please, try later
     </div>
 
   </form>

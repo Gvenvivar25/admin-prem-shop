@@ -254,7 +254,7 @@ h3 {
 }
 
 .card.marked {
-    border: 4px solid #42b983;
+    border: 4px solid #ee7a12;
 }
 
 .card.center {
@@ -739,9 +739,3 @@ h3 {
     background-repeat: no-repeat;
     background-position: center;
 }
-
-/*
-.order:hover {
-    cursor: pointer;
-    background: #7BF8BF;
-}*/

@@ -3,7 +3,7 @@
     <li class="pagination-item">
       <button class="btn"
       :disabled="modelValue === 1"
-      @click="$emit('update:modelValue', modelValue - 1)">Назад</button>
+      @click="$emit('update:modelValue', modelValue - 1)">Prev</button>
     </li>
 
     <li class="pagination-item" v-for="p in pages" :key="p">
@@ -18,7 +18,7 @@
           class="btn"
           :disabled="modelValue === pages"
           @click="$emit('update:modelValue', modelValue + 1)"
-      >Вперед</button>
+      >Next</button>
     </li>
   </ul>
 </template>
@@ -61,8 +61,8 @@ export default {
   opacity: 0.8;
 }
 .btn.active {
-  background-color: #42b983;
-  color: #fff;
+  background-color: white;
+  color: black;
 }
 
 </style>

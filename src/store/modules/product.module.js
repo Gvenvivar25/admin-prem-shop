@@ -24,6 +24,10 @@ export default {
       product.discPer = discPer
       product.discValue = discValue
     },
+    updateProductWeight(state, {id, weight}) {
+      const product = state.products.find(p => p.id === id)
+      product.weight = weight
+    },
     updateProduct(state, product) {
       const idx = state.products.findIndex(item => item.id === product.id)
       if (idx !== -1) {
@@ -91,6 +95,22 @@ export default {
         commit('updateProductDiscount', product)
         dispatch('setMessage', {
           value: 'Discounts are successfully updated',
+          type: 'primary'
+        }, {root: true})
+        return product
+      } catch (e) {
+        dispatch('setMessage', {
+          value: e.message,
+          type: 'danger'
+        }, {root: true})
+      }
+    },
+    async updateWeight({commit, dispatch }, product) {
+      try {
+        await updateProduct(product)
+        commit('updateProductWeight', product)
+        dispatch('setMessage', {
+          value: 'Priority for products is successfully updated',
           type: 'primary'
         }, {root: true})
         return product

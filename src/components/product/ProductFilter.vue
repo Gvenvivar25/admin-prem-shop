@@ -1,7 +1,7 @@
 <template>
   <div class="products-filter">
     <div class="form-control">
-      <input type="text" placeholder="Search product..." v-model="search">
+      <input type="text" placeholder="Search..." v-model="search">
       <span class="form-control-clear" @click="search = '' ">&times;</span>
     </div>
   </div>
@@ -9,15 +9,12 @@
 
 <script>
 import {ref, watch} from 'vue'
-
 import {useRouter} from 'vue-router'
-
 
 export default {
   emits: ['update:modelValue'],
   props: ['modelValue'],
   setup(props, {emit}) {
-   // const store = useStore()
     const router = useRouter()
     const search = ref(props.modelValue.search || '')
 

@@ -7,7 +7,6 @@ https://premium-shop-wg.herokuapp.com/
 Project repo:
 https://github.com/Gvenvivar25/pts-f-21-5
 
-До сдачи планируем доделать логин через openid, фильтрацию товаров
 
 ## Admin panel
 Admin panel url:
@@ -23,7 +22,5 @@ user: admin@gmail.com
 password: 123456
 
 ```
-Это не финальный вариант админки
-Еще до сдачи будет добавлен функционал по работе с товарами и скидками
 
 

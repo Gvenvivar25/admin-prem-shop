@@ -8,6 +8,7 @@
   <div class="flex_center">
     <product-filter v-model="filter"></product-filter>
     <button class="btn" v-if="checked" @click="discount = true">Set discount</button>
+    <button class="btn" v-if="checked" @click="weight = true">Set weight</button>
   </div>
 
   <div class="card">
@@ -31,6 +32,12 @@
   </teleport>
 
   <teleport to="body">
+    <app-modal v-if="weight" title="Set weight" @close="weight = false">
+      <weight-modal @created-weight="weight = false" :checkedProds="checkedProds" />
+    </app-modal>
+  </teleport>
+
+  <teleport to="body">
     <app-modal v-if="modal" title="Add product" @close="modal = false">
       <product-modal @created-prod="modal = false" />
     </app-modal>
@@ -50,6 +57,7 @@ import {useRoute, useRouter} from 'vue-router'
 import {onMounted, computed, ref, watch} from 'vue'
 import {chunk} from 'lodash'
 import DiscountModal from '@/components/product/DiscountModal'
+import WeightModal from '@/components/product/WeightModal'
 
 
 export default {
@@ -59,10 +67,11 @@ export default {
     const store = useStore()
     const modal = ref(false)
     const checked = ref(false)
+    const weight = ref(false)
     const discount = ref(false)
     const checkedProds = ref({})
     const loading = ref(true)
-    const PAGE_SIZE = 50
+    const PAGE_SIZE = 5
     const page= ref(route.query.page ? route.query.page : 1)
     const filter = ref({
       search: route.query.search,
@@ -106,11 +115,13 @@ export default {
       filter,
       showButton,
       checked,
+      weight,
       discount,
       checkedProds
     }
   },
-  components: {AppPage, ProductTable, AppLoader, AppModal, ProductModal, AppPagination, ProductFilter, DiscountModal}
+  components: {AppPage, ProductTable, AppLoader, AppModal, ProductModal, AppPagination, ProductFilter, DiscountModal,
+    WeightModal}
 }
 </script>
 
